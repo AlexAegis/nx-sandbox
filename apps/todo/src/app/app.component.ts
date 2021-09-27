@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Message } from '@nx-sandbox/api-interfaces';
+import { TodoStoreFacade } from './store/todo-store.facade';
 
 @Component({
 	selector: 'nx-sandbox-root',
@@ -9,5 +10,13 @@ import { Message } from '@nx-sandbox/api-interfaces';
 })
 export class AppComponent {
 	hello$ = this.http.get<Message>('/api/hello');
-	constructor(private http: HttpClient) {}
+	todos$ = this.todoStoreFacade.todos$;
+	todoCount$ = this.todoStoreFacade.todoCount$;
+	i = 0;
+	constructor(private http: HttpClient, private readonly todoStoreFacade: TodoStoreFacade) {}
+
+	createTestTodo(): void {
+		this.todoStoreFacade.createTodo({ content: 'Test', name: `Test ${this.i}` });
+		this.i++;
+	}
 }

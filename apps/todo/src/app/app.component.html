@@ -7,3 +7,11 @@
 	/>
 </div>
 <div>Message: {{ hello$ | async | json }}</div>
+<div>There are {{ todoCount$ | async }} todos saved!</div>
+<ol>
+	<li *ngFor="let todo of todos$ | async">
+		<span>{{ todo.name }}</span>
+		<span>{{ todo.content }}</span>
+	</li>
+</ol>
+<button (click)="createTestTodo()">Crate Test Todo</button>
